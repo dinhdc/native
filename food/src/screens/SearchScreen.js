@@ -1,27 +1,33 @@
 import React, {useState} from 'react';
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, ScrollView} from 'react-native';
 import SearchBar from "../components/SearchBar";
 import useResults from "../hooks/useResults";
+import ResultList from "../components/ResultList";
 
 const SearchScreen = () => {
 
     const [term, setTerm] = useState("");
     const {searchApi, errorMessage, results} = useResults();
 
+    const filterResultByPrice = price => {
+        return results.filter(item => item.price === price)
+    }
+
     return (
-        <View>
+        <>
             <SearchBar
                 term={term}
                 onTermSubmit={() => searchApi(term)}
-                onTermChange={(newTerm) => setTerm(newTerm)} />
+                onTermChange={(newTerm) => setTerm(newTerm)}/>
             {errorMessage ? <Text>{errorMessage}</Text> : null}
-            <Text>We have found {results.length} results</Text>
-        </View>
+            <ScrollView>
+                <ResultList results={filterResultByPrice('$')} title={"Cost Effective"}/>
+                <ResultList results={filterResultByPrice('$$')} title={"Best Price"}/>
+                <ResultList results={filterResultByPrice('$$$')} title={"Big Spender"}/>
+            </ScrollView>
+        </>
     );
 };
 
-const styles = StyleSheet.create({
-    // Add your styles here
-});
 
 export default SearchScreen;

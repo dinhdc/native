@@ -1,9 +1,8 @@
 import React, {useContext} from 'react';
-import {Text, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {Text, View} from 'react-native';
 import {Context} from "../context/BlogContext";
-import {EvilIcons} from "@expo/vector-icons";
 
-const ShowScreen = ({navigation, route}) => {
+const ShowScreen = ({route}) => {
 
     const {id} = route.params;
 
@@ -19,8 +18,5 @@ const ShowScreen = ({navigation, route}) => {
     );
 };
 
-const styles = StyleSheet.create({
-    // Add your styles here
-});
 
 export default ShowScreen;
